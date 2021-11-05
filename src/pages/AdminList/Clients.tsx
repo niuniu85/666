@@ -18,7 +18,7 @@ const Clients = () => {
     selectedRowKeys: selectedRowKeys,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     onChange: (_selectedRowKeys: any, _selectedRows: any) => {
-      console.log('选中的KEY:' + _selectedRowKeys, '选中的数据' + JSON.stringify(_selectedRows));
+      // console.log('选中的KEY:' + _selectedRowKeys, '选中的数据' + JSON.stringify(_selectedRows));
       setSelectedRowKeys(_selectedRowKeys);
       setSelectedRows(_selectedRows);
     },

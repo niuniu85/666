@@ -47,6 +47,12 @@ const Index = () => {
      manual : true,
     },
   );
+  const openinit = useRequest<{ data: BasicListApi.Data }>(
+    `/api/openclient?page=${page}&per_page=${per_page}${sortQuery}`,
+    {
+     manual : true,
+    },
+  );
 
   const initmodel = useRequest<{ data: Admin.Data }>(`${localUri}/api/showUploadClientList`,{manual:true});
 
@@ -242,7 +248,22 @@ const Index = () => {
         {ClientManageList()}
       </TabPane>
       <TabPane tab="公海" key="openClient">
-        Content of Tab Pane 2
+      {searchLayout()}
+        <Card>
+          {beforeTableLayou()}
+          <Table
+            rowKey="_id"
+            dataSource={openinit?.data?.dataSource}
+            columns={ColumnBuilder(openinit?.data?.layout?.tableColumn?.result2,initRun)}
+            pagination={false}
+            loading={openinit.loading}
+            onChange={tableChangeHandler}
+            rowSelection={rowSelection}
+          />
+          {afterTableLayou()}
+        </Card>
+        {tableToolbar()}
+        {ClientManageList()}
       </TabPane>
     </Tabs>
   );

@@ -7,8 +7,8 @@ const { confirm } = Modal;
 
 
 const ActionBuilder = (selectedRowKeys: number[],selectedRows: Admin.DataSource[],initRun: () => void,personnel: Admin.personnel | undefined) => {
-  console.log('options类型为：'+typeof personnel?.options);
-  console.log('options为：'+JSON.stringify(personnel?.options));
+  // console.log('options类型为：'+typeof personnel?.options);
+  // console.log('options为：'+JSON.stringify(personnel?.options));
 
   const columns = [
     {

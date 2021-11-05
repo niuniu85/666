@@ -96,6 +96,7 @@ const ActionBuilder = (selectedRowKeys: number[],selectedRows: Admin.DataSource[
     <Space>
         <Button type='primary' onClick={showDeleteConfirm}>转移</Button>
       <Button>投海</Button>
+      <Button>删除</Button>
       <span style={{ marginLeft: 8 }}>
         {`已选中 ${selectedRowKeys.length} 条`}
       </span>
