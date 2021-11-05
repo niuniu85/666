@@ -22,6 +22,8 @@ import ColumnBuilder from './builder/ColumnBuilder';
 import SearchBuilder from './builder/SearchBuilder';
 import { SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { submitFieldsAdapto } from './helper';
+import { FooterToolbar } from '@ant-design/pro-layout';
+import ActionBuilderModel from './builder/ActionBuilderModel';
 
 const localUri ='http://localhost';
 
@@ -29,6 +31,7 @@ const Index = () => {
   const { TabPane } = Tabs;
 
   const [selectedRowKeys, setselectedRowKeys] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
   const [page, setpage] = useState(1);
   const [per_page, setperPage] = useState(10);
   const [sortQuery, setSortQuery] = useState('');
@@ -44,6 +47,8 @@ const Index = () => {
      manual : true,
     },
   );
+
+  const initmodel = useRequest<{ data: Admin.Data }>(`${localUri}/api/showUploadClientList`,{manual:true});
 
   useEffect(() => {
     init.run();
@@ -80,6 +85,7 @@ const Index = () => {
     onChange: (_selectedRowKeys: any, _selectedRows: any) => {
       console.log('选中的KEY:' + _selectedRowKeys, '选中的数据' + JSON.stringify(_selectedRows));
       setselectedRowKeys(_selectedRowKeys);
+      setSelectedRows(_selectedRows);
     },
   };
 
@@ -208,7 +214,11 @@ const Index = () => {
       </Row>
     );
   };
-
+  const ClientManageList = () => {
+    return (
+      selectedRowKeys.length>0 ?<FooterToolbar extra={ActionBuilderModel(selectedRowKeys,selectedRows,initRun,initmodel?.data?.personnel[0])}/> : null
+     );
+   }
 
 
   const Demo = () => (
@@ -229,6 +239,7 @@ const Index = () => {
           {afterTableLayou()}
         </Card>
         {tableToolbar()}
+        {ClientManageList()}
       </TabPane>
       <TabPane tab="公海" key="openClient">
         Content of Tab Pane 2
