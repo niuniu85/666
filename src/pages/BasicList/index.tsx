@@ -170,8 +170,8 @@ const Index = () => {
             >
               添加
             </Button>
-            <Upload method="post" name={initialState?.currentUser?.userid} {...props}>
-              <Button icon={<UploadOutlined />} key={initialState?.currentUser?.userid}>导入</Button>
+            <Upload method="post" name={initialState?.currentUser?.access} {...props}>
+              <Button icon={<UploadOutlined />} key={initialState?.currentUser?.access}>导入</Button>
             </Upload>
             <Modal
               modalVisible={modalVisible}

@@ -58,6 +58,18 @@
     component: './BasicList',
   },
   {
+    name: '网站助手',
+    icon: 'chrome',
+    path: '/chrome-list',
+    component: './Chrome',
+  },
+  {
+    name: '手机助手',
+    icon: 'phone',
+    path: '/mobilephone-list',
+    component: './MobilePhone',
+  },
+  {
     path: '/',
     redirect: '/basic-list',
   },
