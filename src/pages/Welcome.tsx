@@ -1,15 +1,8 @@
-
 const Welcome = () => {
-
-
-const Demo = () => {
-
-return (<p>"初始页"</p>);
-
+  const Demo = () => {
+    return <p>"初始页"</p>;
+  };
+  return <Demo key="welcomeDemo" />;
 };
-  return (
-    <Demo key='welcomeDemo' />
-  )
-}
 
-export default Welcome
+export default Welcome;

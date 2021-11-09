@@ -1,10 +1,7 @@
 import moment from 'moment';
 
-
 const ColumnBuilder = (tableColumn: Admin.Column[] | undefined) => {
   const newColumns: Admin.Column[] = [];
-
-
 
   (tableColumn || []).forEach((column) => {
     switch (column.dataIndex) {

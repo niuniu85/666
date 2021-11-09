@@ -45,62 +45,61 @@ declare module Admin {
     userid: string;
     work: string;
     customer_name: string;
-}
+  }
 
-export interface Column {
+  export interface Column {
     _id: string;
     title: string;
     dataIndex: string;
-    [key: string]: any
-}
+    [key: string]: any;
+  }
 
-export interface BatchToolBar {
+  export interface BatchToolBar {
     component: string;
     text: string;
     type: string;
     action: string;
     uri: string;
     method: string;
-}
+  }
 
-export interface Layout {
+  export interface Layout {
     tableColumn: any[];
     tableToolBar: any[];
     batchToolBar: BatchToolBar[];
-}
+  }
 
-export interface Child2 {
-  value: string;
-  label: string;
-}
+  export interface Child2 {
+    value: string;
+    label: string;
+  }
 
-export interface Child {
-  value: string;
-  label: string;
-  children: Child2[];
-}
+  export interface Child {
+    value: string;
+    label: string;
+    children: Child2[];
+  }
 
-export interface Option {
-  value: string;
-  label: string;
-  children: Child[];
-}
+  export interface Option {
+    value: string;
+    label: string;
+    children: Child[];
+  }
 
-export interface personnel {
-  _id: string;
-  options: Option[];
-}
+  export interface personnel {
+    _id: string;
+    options: Option[];
+  }
 
-export interface Data {
-  dataSource: DataSource[];
-  columns: Column[];
-  layout: Layout;
-  personnel: personnel[];
-}
-export interface RootObject {
+  export interface Data {
+    dataSource: DataSource[];
+    columns: Column[];
+    layout: Layout;
+    personnel: personnel[];
+  }
+  export interface RootObject {
     success: boolean;
     data: Data;
     massage: string;
-}
-
+  }
 }

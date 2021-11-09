@@ -24,13 +24,11 @@ import { SearchOutlined, UploadOutlined } from '@ant-design/icons';
 import { submitFieldsAdapto } from './helper';
 import { FooterToolbar } from '@ant-design/pro-layout';
 import ActionBuilderModel from './builder/ActionBuilderModel';
-import OC from './OC';
 
-const localUri ='http://localhost';
+const localUri = 'http://localhost';
 
 const Index = () => {
   const { TabPane } = Tabs;
-
   const [selectedRowKeys, setselectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [page, setpage] = useState(1);
@@ -45,25 +43,29 @@ const Index = () => {
   const init = useRequest<{ data: BasicListApi.Data }>(
     `/api/client?id=${initialState?.currentUser?.userid}&page=${page}&per_page=${per_page}${sortQuery}`,
     {
-     manual : true,
+      manual: true,
+      onSuccess: () => {
+        setselectedRowKeys([]);
+        setSelectedRows([]);
+      },
     },
   );
 
+  const initmodel = useRequest<{ data: Admin.Data }>(`${localUri}/api/showUploadClientList`, {
+    manual: true,
+  });
 
-  const initmodel = useRequest<{ data: Admin.Data }>(`${localUri}/api/showUploadClientList`,{manual:true});
-
-  function callback(key) {
+  function callback(key: any) {
     console.log(key);
-
   }
 
   useEffect(() => {
-    init.run()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    init.run();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, per_page, sortQuery]);
   const initRun = () => {
     setSortQuery('');
-  }
+  };
 
   const paginationChangeHandler = (_page: any, _per_page: any) => {
     setpage(_page);
@@ -80,11 +82,7 @@ const Index = () => {
   const onFinish = (value: any) => {
     const formValue = submitFieldsAdapto(value);
     console.log(formValue);
-
-  }
-
-
-
+  };
 
   const rowSelection = {
     selectedRowKeys: selectedRowKeys,
@@ -96,14 +94,10 @@ const Index = () => {
     },
   };
 
-
-
   const props = {
     maxCount: 1,
     beforeUpload: (file: any) => {
-      if (
-        file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      ) {
+      if (file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
         message.error(`${file.name} 不是指定文件`);
       } else {
         console.log(JSON.stringify(file));
@@ -117,9 +111,9 @@ const Index = () => {
     onclick: (info: any) => {
       console.log(info);
     },
-    onchange:()=>{
+    onchange: () => {
       console.log(JSON.stringify(event));
-    }
+    },
   };
 
   const searchLayout = () => {
@@ -130,7 +124,7 @@ const Index = () => {
             <Row gutter={24}>
               {SearchBuilder(init.data?.layout?.tableColumn?.result2 || [])}
               <Col sm={6}>
-                <Form.Item name='Trash' key='Trash' label="回收站">
+                <Form.Item name="Trash" key="Trash" label="回收站">
                   <Select>
                     <Select.Option value="A">XXX</Select.Option>
                     <Select.Option value="B">XXX</Select.Option>
@@ -142,8 +136,12 @@ const Index = () => {
             <Row>
               <Col sm={24} className={styles.textAlignRight}>
                 <Space>
-                  <Button type="primary" htmlType="submit" key='searchSubmit'>查找</Button>
-                  <Button htmlType="reset" key='searchReset'>清空</Button>
+                  <Button type="primary" htmlType="submit" key="searchSubmit">
+                    查找
+                  </Button>
+                  <Button htmlType="reset" key="searchReset">
+                    清空
+                  </Button>
                 </Space>
               </Col>
             </Row>
@@ -182,7 +180,9 @@ const Index = () => {
               添加
             </Button>
             <Upload method="post" name={initialState?.currentUser?.access} {...props}>
-              <Button icon={<UploadOutlined />} key={initialState?.currentUser?.access}>导入</Button>
+              <Button icon={<UploadOutlined />} key={initialState?.currentUser?.access}>
+                导入
+              </Button>
             </Upload>
             <Modal
               modalVisible={modalVisible}
@@ -197,7 +197,7 @@ const Index = () => {
       </Row>
     );
   };
-  const afterTableLayou = () => { };
+  const afterTableLayou = () => {};
   const tableToolbar = () => {
     return (
       <Row key="tableToolbarRow">
@@ -220,11 +220,17 @@ const Index = () => {
     );
   };
   const ClientManageList = () => {
-    return (
-      selectedRowKeys.length>0 ?<FooterToolbar extra={ActionBuilderModel(selectedRowKeys,selectedRows,initRun,initmodel?.data?.personnel[0])}/> : null
-     );
-   }
-
+    return selectedRowKeys.length > 0 ? (
+      <FooterToolbar
+        extra={ActionBuilderModel(
+          selectedRowKeys,
+          selectedRows,
+          initRun,
+          initmodel?.data?.personnel[0],
+        )}
+      />
+    ) : null;
+  };
 
   const Demo = () => (
     <Tabs defaultActiveKey="clientList" onChange={callback}>
@@ -235,7 +241,7 @@ const Index = () => {
           <Table
             rowKey="_id"
             dataSource={init?.data?.dataSource}
-            columns={ColumnBuilder(init?.data?.layout?.tableColumn?.result2,initRun)}
+            columns={ColumnBuilder(init?.data?.layout?.tableColumn?.result2, initRun)}
             pagination={false}
             loading={init.loading}
             onChange={tableChangeHandler}
@@ -246,15 +252,15 @@ const Index = () => {
         {tableToolbar()}
         {ClientManageList()}
       </TabPane>
-      <TabPane tab="公海" key="openClient">
-        {OC()}
+      <TabPane tab="新增" key="openClient">
+        ...
       </TabPane>
     </Tabs>
   );
 
   return (
     <div>
-      <Demo key='basicListIndex' />
+      <Demo key="basicListIndex" />
     </div>
   );
 };

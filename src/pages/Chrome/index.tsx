@@ -1,10 +1,5 @@
+const Index = () => {
+  return <div>网站助手</div>;
+};
 
-const index = () => {
-  return (
-    <div>
-      网站助手
-    </div>
-  )
-}
-
-export default index
+export default Index;

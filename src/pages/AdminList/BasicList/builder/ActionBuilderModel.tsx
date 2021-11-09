@@ -2,6 +2,7 @@ import { reRequestState } from '@/pages/AdminList/builder/ShowPageApi';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Button, Cascader, Form, message, Modal, Space, Table } from 'antd';
 import { useIntl } from 'umi';
+import { reRequestStateTo } from '../../builder/ShowPageApiTo';
 const { confirm } = Modal;
 
 const ActionBuilder = (
@@ -39,7 +40,7 @@ const ActionBuilder = (
   const [form] = Form.useForm();
 
   const onFinish = async (value: any) => {
-    const msg = await reRequestState(value, '/admin/clientListDistribution', selectedRowKeys);
+    const msg = await reRequestState('/admin/clientListDistributionTo',value, selectedRowKeys);
     if (msg.status === 'ok') {
       const defaultLoginSuccessMessage = intl.formatMessage({
         id: 'pages.distribution.success',
@@ -55,12 +56,30 @@ const ActionBuilder = (
       message.error(defaultLoginSuccessMessage);
     }
   };
+  const onFinishregression = async () => {
+    const msg = await reRequestStateTo('/admin/clientListDistributionTo',selectedRowKeys);
+    if (msg.status === 'ok') {
+      const defaultLoginSuccessMessage = intl.formatMessage({
+        id: 'pages.regression.success',
+        defaultMessage: '回归成功！',
+      });
+      message.success(defaultLoginSuccessMessage);
+      // eslint-disable-next-line no-param-reassign
+    } else {
+      const defaultLoginSuccessMessage = intl.formatMessage({
+        id: 'pages.regression.failure',
+        defaultMessage: '回归失败，请重试！',
+      });
+      message.error(defaultLoginSuccessMessage);
+    }
+  };
 
   const batchOverview = () => {
     return (
       <>
         <Table
           size="small"
+          scroll={{ x: 200, y: 300 }}
           rowKey="phone"
           pagination={false}
           dataSource={selectedRows}
@@ -71,6 +90,20 @@ const ActionBuilder = (
             <Cascader placeholder="请选择到具体名字，单位无效!" options={personnel?.options} />
           </Form.Item>
         </Form>
+      </>
+    );
+  };
+  const batchOverviewregression = () => {
+    return (
+      <>
+        <Table
+          size="small"
+          scroll={{ x: 200, y: 300 }}
+          rowKey="phone"
+          pagination={false}
+          dataSource={selectedRows}
+          columns={columns}
+        />
       </>
     );
   };
@@ -90,14 +123,29 @@ const ActionBuilder = (
       onCancel() {},
     });
   }
+  function regression() {
+    confirm({
+      title: `请确认将${selectedRowKeys.length}条用户记录回归?`,
+      icon: <ExclamationCircleOutlined />,
+      content: batchOverviewregression(),
+      okText: '确定',
+      okType: 'danger',
+      cancelText: '取消',
+      onOk() {
+        onFinishregression?.();
+        initRun();
+      },
+      onCancel() {},
+    });
+  }
 
   return (
     <Space>
-      <Button type="primary" onClick={showDeleteConfirm}>
-        转移
+      <Button type="primary" onClick={regression}>
+        回归
       </Button>
-      <Button>投海</Button>
-      <Button>删除</Button>
+      <Button onClick={showDeleteConfirm}>转移</Button>
+      <Button >删除</Button>
       <span style={{ marginLeft: 8 }}>{`已选中 ${selectedRowKeys.length} 条`}</span>
     </Space>
   );

@@ -103,11 +103,17 @@ declare module BasicListApi {
     per_page: number;
   }
 
+  export interface personnel {
+    _id: string;
+    options: Option[];
+  }
+
   export interface Data {
     dataSource: DataSource[];
     layout: Layout;
     page: Page;
     meta: Meta;
+    personnel: personnel[];
   }
 
   export interface RootObject {

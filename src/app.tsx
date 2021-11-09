@@ -1,14 +1,10 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
 import type { RunTimeLayoutConfig } from 'umi';
-import { history, } from 'umi';
+import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
-
-
-
-
 
 const loginPath = '/user/login';
 
@@ -23,10 +19,10 @@ export const initialStateConfig = {
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
   currentUser?: API.CurrentUser;
-  fetchUserInfo?: (userid?: string ) => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: (userid?: string) => Promise<API.CurrentUser | undefined>;
 }> {
   const fetchUserInfo = async (userid?: string) => {
-    console.log('fetchUserInfo = async (userid?: string):'+userid);
+    console.log('fetchUserInfo = async (userid?: string):' + userid);
     try {
       const msg = await queryCurrentUser(userid);
       return msg.data;

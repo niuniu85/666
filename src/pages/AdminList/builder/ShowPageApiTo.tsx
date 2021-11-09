@@ -2,15 +2,13 @@ import { request } from 'umi';
 
 const localUri = 'http://localhost';
 
-export async function reRequestState(
+export async function reRequestStateTo(
   uri: string,
-  value?: BasicListApi.DataSource,
   selectedRowKeys?: number[],
   selectPhone?: string,
 ) {
   const bodyData = {
     selectedRowKeys,
-    userName: value?.selectUser,
     userPhone: selectPhone,
   };
 

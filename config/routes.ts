@@ -18,12 +18,12 @@
       },
     ],
   },
-  // {
-  //   path: '/welcome',
-  //   name: 'welcome',
-  //   icon: 'smile',
-  //   component: './Welcome',
-  // },
+  {
+    name: '样品',
+    icon: 'table',
+    path: '/demo',
+    component: './Demo/BasicList',
+  },
   {
     path: '/admin',
     name: '后台管理',
@@ -31,14 +31,24 @@
     access: 'canAdmin',
     routes: [
       {
-        path: '/admin/users-page',
+        path: '/admin/users',
         name: '管理用户',
         component: './AdminList/Users',
       },
       {
-        path: '/admin/clients-page',
         name: '管理客户',
-        component: './AdminList/Clients',
+        routes: [
+          {
+            path: '/admin/client',
+            name: '导入',
+            component: './AdminList/Clients',
+          },
+          {
+            path: '/admin/basic',
+            name: '公海',
+            component: './AdminList/BasicList',
+          },
+        ],
       },
       {
         component: './404',
@@ -58,16 +68,20 @@
     component: './BasicList',
   },
   {
-    name: '网站助手',
-    icon: 'chrome',
-    path: '/chrome-list',
-    component: './Chrome',
-  },
-  {
-    name: '手机助手',
-    icon: 'phone',
-    path: '/mobilephone-list',
-    component: './MobilePhone',
+    name: '工具',
+    icon: 'user',
+    routes: [
+      {
+        path: '/chrome',
+        name: '网站',
+        component: './Chrome',
+      },
+      {
+        path: '/mobilephone',
+        name: '手机',
+        component: './MobilePhone',
+      },
+    ],
   },
   {
     path: '/',

@@ -1,10 +1,5 @@
-
 const Rigister = () => {
-  return (
-    <div>
-      register
-    </div>
-  )
-}
+  return <div>register</div>;
+};
 
-export default Rigister
+export default Rigister;

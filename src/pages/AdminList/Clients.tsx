@@ -1,18 +1,19 @@
-import { FooterToolbar, } from "@ant-design/pro-layout";
-import { Tabs, Table, } from "antd";
-import { useEffect, useState } from "react";
-import { useRequest } from "umi";
-import ActionBuilder from "./builder/ActionBuilder";
-import ColumnBuilder from "./builder/ColumnBuilder";
+import { FooterToolbar } from '@ant-design/pro-layout';
+import { Tabs, Table } from 'antd';
+import { useEffect, useState } from 'react';
+import { useRequest } from 'umi';
+import ActionBuilder from './builder/ActionBuilder';
+import ColumnBuilder from './builder/ColumnBuilder';
 const { TabPane } = Tabs;
 
-const localUri ='http://localhost';
+const localUri = 'http://localhost';
 
 const Clients = () => {
-  const init = useRequest<{ data: Admin.Data }>(`${localUri}/api/showUploadClientList`,{manual:true});
+  const init = useRequest<{ data: Admin.Data }>(`${localUri}/api/showUploadClientList`, {
+    manual: true,
+  });
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
-
 
   const rowSelection = {
     selectedRowKeys: selectedRowKeys,
@@ -24,30 +25,35 @@ const Clients = () => {
     },
   };
 
+  const initRun = () => {
+    setSelectedRowKeys([]);
+  };
+  useEffect(() => {
+    if (selectedRowKeys.length === 0) {
+      init.run();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedRowKeys]);
 
-const initRun = () => {
-  setSelectedRowKeys([]);
-}
-useEffect(() => {
-  if (selectedRowKeys.length === 0 ) {
-    init.run()
-  }
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [selectedRowKeys])
-
-const ClientManageList = () => {
-  return (
-    selectedRowKeys.length>0 ?<FooterToolbar extra={ActionBuilder(selectedRowKeys,selectedRows,initRun,init?.data?.personnel[0])}/> : null
-   );
- }
-
-
+  const ClientManageList = () => {
+    return selectedRowKeys.length > 0 ? (
+      <FooterToolbar
+        extra={ActionBuilder(selectedRowKeys, selectedRows, initRun, init?.data?.personnel[0])}
+      />
+    ) : null;
+  };
 
   const Demo = () => (
     <Tabs defaultActiveKey="1">
       <TabPane tab="导入列表" key="1">
-      <Table rowKey="phone" rowSelection={rowSelection} columns={ColumnBuilder(init?.data?.columns)} dataSource={init?.data?.dataSource} />
-      {ClientManageList()}
+        <Table
+          rowKey="phone"
+          size="small"
+          rowSelection={rowSelection}
+          columns={ColumnBuilder(init?.data?.columns)}
+          dataSource={init?.data?.dataSource}
+        />
+        {ClientManageList()}
       </TabPane>
       <TabPane tab="分配记录" key="2">
         Content of Tab Pane 2
@@ -55,10 +61,7 @@ const ClientManageList = () => {
     </Tabs>
   );
 
-  return (
-    <Demo key='clientsManage' />
-  )
-}
+  return <Demo key="clientsManage" />;
+};
 
-export default Clients
-
+export default Clients;

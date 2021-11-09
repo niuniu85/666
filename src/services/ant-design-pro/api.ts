@@ -2,7 +2,7 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-const localUri ='http://localhost';
+const localUri = 'http://localhost';
 
 /** 获取当前的用户 GET /api/currentUser */
 export async function currentUser(userid?: string, options?: { [key: string]: any }) {

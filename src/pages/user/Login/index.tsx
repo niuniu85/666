@@ -16,10 +16,6 @@ import { getFakeCaptcha } from '@/services/ant-design-pro/login';
 
 import styles from './index.less';
 
-
-
-
-
 const LoginMessage: React.FC<{
   content: string;
 }> = ({ content }) => (
@@ -39,16 +35,12 @@ const Login: React.FC = () => {
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
 
-
-
-
-
   const intl = useIntl();
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
   const fetchUserInfo = async (userid?: string) => {
     const userInfo = await initialState?.fetchUserInfo?.(userid);
-    console.log('fetchUserInfo?.(userid):'+userid);
+    console.log('fetchUserInfo?.(userid):' + userid);
 
     if (userInfo) {
       await setInitialState((s: any) => ({
@@ -77,7 +69,7 @@ const Login: React.FC = () => {
         const { query } = history.location;
         const { redirect } = query as { redirect: string };
         // history.push(redirect? `/admin/${redirect}`:'/' );
-        history.push(redirect||'/' );
+        history.push(redirect || '/');
         return;
       }
       // 如果失败去设置用户错误信息
@@ -315,9 +307,9 @@ const Login: React.FC = () => {
           <Space className={styles.other}>
             <FormattedMessage id="pages.login.loginWith" defaultMessage="其他登录方式" />
             <WechatOutlined className={styles.icon} />
-            <QqOutlined  className={styles.icon} />
+            <QqOutlined className={styles.icon} />
             {/* <TaobaoCircleOutlined className={styles.icon} /> */}
-            <DingtalkOutlined  className={styles.icon} />
+            <DingtalkOutlined className={styles.icon} />
           </Space>
         </div>
       </div>
