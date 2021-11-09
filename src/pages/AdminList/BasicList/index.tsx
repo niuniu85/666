@@ -54,7 +54,7 @@ const Index = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, per_page, sortQuery]);
   const initRun = () => {
-    setSortQuery('');
+    init.run()
   };
 
   const paginationChangeHandler = (_page: any, _per_page: any) => {
